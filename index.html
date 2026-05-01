@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Dental Experience - Advanced Dental Care with Comfort & Trust. Book your appointment today for a perfect smile.">
+    <title>The Dental Experience | Premium Dental Clinic</title>
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://wa.me">
+    
+    <!-- Tailwind CSS for Modern Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0EA5E9',
+                        dark: '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Sora', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Locomotive Scroll for Smooth Kinetic Scrolling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    
+    <!-- Critical CSS Overrides -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap');
+        
+        [data-scroll-container] {
+            perspective: 1px;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #0F172A 0%, #0EA5E9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .service-card-modern {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff, #f8faff);
+        }
+        .service-card-modern:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px -12px rgba(14, 165, 233, 0.15);
+        }
+        .image-reveal {
+            overflow: hidden;
+            border-radius: 2.5rem;
+        }
+        .image-reveal img {
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .image-reveal:hover img {
+            transform: scale(1.1);
+        }
+        #intro-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+        #intro-canvas {
+            width: 100%;
+            height: 100%;
+        }
+        .main-content {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        .main-content.visible {
+            opacity: 1;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+
+    <!-- External Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalOrganization",
+      "name": "The Dental Experience",
+      "url": "https://thedentalexperience.in",
+      "logo": "https://thedentalexperience.in/img/logo.webp",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-9958000108",
+        "contactType": "customer service"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Placeholder Address",
+        "addressLocality": "City",
+        "addressRegion": "State",
+        "postalCode": "000000",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
+</head>
+<body class="bg-white overflow-x-hidden">
+    <!-- Locomotive Scroll Container -->
+    <div data-scroll-container>
+        <!-- 3D Intro Overlay -->
+        <div id="intro-3d">
+            <div id="loader-3d" class="absolute inset-0 flex items-center justify-center flex-col gap-4">
+                <div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-xs font-bold tracking-widest text-primary uppercase animate-pulse">Initializing Experience</p>
+            </div>
+            <canvas id="intro-canvas"></canvas>
+        </div>
+
+        <div class="main-content">
+            <!-- Header -->
+            <header class="glass-nav z-[1000] fixed top-0 left-0 w-full h-20 flex items-center border-b border-gray-100">
+                <div class="container mx-auto px-6 flex justify-between items-center h-full">
+                    <a href="#" class="font-heading text-2xl font-extrabold tracking-tighter">
+                        THE DENTAL <span class="text-primary">EXPERIENCE</span>
+                    </a>
+                    <nav class="hidden md:flex items-center space-x-8 font-medium">
+                        <a href="#home" class="hover:text-primary transition-colors">Home</a>
+                        <a href="#about" class="hover:text-primary transition-colors">About</a>
+                        <a href="#services" class="hover:text-primary transition-colors">Services</a>
+                        <a href="#booking" class="bg-primary text-white px-6 py-3 rounded-full hover:bg-dark transition-all shadow-lg shadow-primary/20">Book Now</a>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Hero Section -->
+            <section id="home" class="relative min-h-screen flex items-center overflow-hidden pt-20">
+                <div id="hero-3d-container" class="absolute inset-0 z-0 opacity-30 md:opacity-100"></div>
+                <div class="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="reveal-up">
+                        <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-primary bg-primary/10 rounded-full uppercase">World-Class Dentistry</span>
+                        <h1 class="text-6xl md:text-8xl font-heading font-extrabold leading-[1.1] mb-8 tracking-tighter">
+                            A Future <br> Full of <span class="text-gradient">Smiles</span>
+                        </h1>
+                        <p class="text-xl text-gray-500 mb-10 max-w-lg leading-relaxed">
+                            Combining artistic precision with advanced medical technology to give you the confidence you deserve.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#booking" class="bg-primary text-white px-8 py-4 rounded-2xl font-bold hover:bg-dark transition-all transform hover:-translate-y-1 shadow-2xl shadow-primary/30">Start Your Journey</a>
+                            <a href="https://wa.me/919958000108" class="flex items-center gap-2 border-2 border-gray-100 px-8 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all">
+                                <img src="https://img.icons8.com/color/48/whatsapp--v1.png" class="w-6 h-6" alt="WhatsApp">
+                                Quick Chat
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative reveal-up floating">
+                        <div class="image-reveal shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover" alt="Modern Dental Treatment" loading="eager">
+                        </div>
+                        <!-- Floating Achievement Badge -->
+                        <div class="absolute -bottom-10 -left-10 bg-white p-6 rounded-3xl shadow-2xl hidden lg:block border border-gray-50">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <img src="https://img.icons8.com/fluency/48/verified-account.png" class="w-6" alt="Verified">
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-dark">ISO 9001:2015</p>
+                                    <p class="text-xs text-gray-400">Certified Excellence</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="py-40">
+                <div class="container mx-auto px-6 grid md:grid-cols-2 gap-24 items-center">
+                    <div class="reveal-up relative">
+                        <div class="image-reveal">
+                            <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&q=80&w=1000" class="w-full aspect-[4/5] object-cover" alt="State of the art facility">
+                        </div>
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+                    </div>
+                    <div class="reveal-up">
+                        <h2 class="text-5xl font-heading font-bold mb-8 leading-tight">Advanced Science Meets <br><span class="text-primary italic">Artistic Care.</span></h2>
+                        <p class="text-gray-500 text-lg mb-10 leading-relaxed">
+                            We don't just treat teeth; we transform lives through confidence. Our clinic utilizes the latest 3D imaging and painless laser technology to provide a clinical experience that is both effective and relaxing.
+                        </p>
+                        <div class="grid grid-cols-2 gap-12 border-t border-gray-100 pt-10">
+                            <div>
+                                <h4 class="text-4xl font-bold text-dark mb-2">15+</h4>
+                                <p class="text-sm font-bold text-primary tracking-widest uppercase">Expertise Years</p>
+                            </div>
+                            <div>
+                                <h4 class="text-4xl font-bold text-dark mb-2">99%</h4>
+                                <p class="text-sm font-bold text-primary tracking-widest uppercase">Patient Satisfaction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="py-40 bg-gray-50/80">
+                <div class="container mx-auto px-6">
+                    <div class="text-center max-w-3xl mx-auto mb-24 reveal-up">
+                        <h2 class="text-6xl font-heading font-bold mb-8 tracking-tight">Our <span class="text-gradient">Mastery.</span></h2>
+                        <p class="text-gray-500 text-lg">Specialized dental solutions tailored to your unique biological profile and aesthetic goals.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-10">
+                        <!-- Teeth Cleaning -->
+                        <div class="service-card-modern bg-white rounded-[3rem] overflow-hidden group reveal-up">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Teeth Cleaning">
+                            </div>
+                            <div class="p-10">
+                                <div class="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                                    <img src="https://img.icons8.com/fluency/48/clean.png" class="w-8" alt="Icon">
+                                </div>
+                                <h3 class="text-2xl font-bold mb-4">Prophylaxis</h3>
+                                <p class="text-gray-500 mb-8 leading-relaxed">Advanced scaling and bio-film removal for systemic health and oral brightness.</p>
+                                <a href="#booking" class="inline-flex items-center gap-2 font-bold text-primary group/link">
+                                    Explore <span class="transition-transform group-hover/link:translate-x-1">→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Root Canal -->
+                        <div class="service-card-modern bg-white rounded-[3rem] overflow-hidden group reveal-up">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Root Canal">
+                            </div>
+                            <div class="p-10">
+                                <div class="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                                    <img src="https://img.icons8.com/fluency/48/tooth.png" class="w-8" alt="Icon">
+                                </div>
+                                <h3 class="text-2xl font-bold mb-4">Endodontics</h3>
+                                <p class="text-gray-500 mb-8 leading-relaxed">Micro-precision root treatments designed to be 100% painless and efficient.</p>
+                                <a href="#booking" class="inline-flex items-center gap-2 font-bold text-primary group/link">
+                                    Explore <span class="transition-transform group-hover/link:translate-x-1">→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Dental Implants -->
+                        <div class="service-card-modern bg-white rounded-[3rem] overflow-hidden group reveal-up">
+                            <div class="h-64 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dental Implants">
+                            </div>
+                            <div class="p-10">
+                                <div class="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                                    <img src="https://img.icons8.com/fluency/48/dental-implants.png" class="w-8" alt="Icon">
+                                </div>
+                                <h3 class="text-2xl font-bold mb-4">Restoration</h3>
+                                <p class="text-gray-500 mb-8 leading-relaxed">Bio-compatible titanium implants that feel, function, and look like natural teeth.</p>
+                                <a href="#booking" class="inline-flex items-center gap-2 font-bold text-primary group/link">
+                                    Explore <span class="transition-transform group-hover/link:translate-x-1">→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Booking Section -->
+            <section id="booking" class="py-20 md:py-40">
+                <div class="container mx-auto px-4 md:px-6">
+                    <div class="bg-dark rounded-[2.5rem] md:rounded-[5rem] overflow-hidden relative reveal-up">
+                        <div class="absolute inset-0 z-0 opacity-10">
+                            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1920" class="w-full h-full object-cover" alt="Background">
+                        </div>
+                        <div class="p-8 md:p-24 relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                            <div>
+                                <h2 class="text-4xl md:text-6xl font-heading font-bold text-white mb-6 md:mb-8 leading-tight">Elevate Your <br><span class="italic text-primary">Smile Status.</span></h2>
+                                <p class="text-gray-400 text-lg md:text-xl mb-8 md:mb-12">Join 5,000+ satisfied patients who chose excellence. Limited slots available this week.</p>
+                                <div class="flex items-center gap-4 md:gap-6">
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-white/10 rounded-2xl flex items-center justify-center shrink-0">
+                                        <img src="https://img.icons8.com/fluency/48/phone.png" class="w-6 md:w-8" alt="Call">
+                                    </div>
+                                    <div>
+                                        <p class="text-red-400 font-bold text-xs md:text-sm tracking-widest uppercase">24/7 Emergency</p>
+                                        <a href="tel:+919958000108" class="text-xl md:text-3xl font-bold text-white break-all md:break-normal">+91 9958000108</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white/5 backdrop-blur-3xl p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-white/10">
+                                <form id="booking-form" class="space-y-4 md:space-y-6">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-bold text-gray-400 ml-2">Full Name</label>
+                                        <input type="text" name="name" placeholder="John Doe" class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 md:p-5 focus:border-primary outline-none transition-all text-white text-base">
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                                        <div class="space-y-2">
+                                            <label class="text-sm font-bold text-gray-400 ml-2">Date</label>
+                                            <input type="date" id="date" name="date" class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 md:p-5 focus:border-primary outline-none transition-all text-white text-base">
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="text-sm font-bold text-gray-400 ml-2">Time</label>
+                                            <select name="time" class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 md:p-5 focus:border-primary outline-none transition-all text-white text-base">
+                                                <option class="bg-dark">09:00 AM</option>
+                                                <option class="bg-dark">12:00 PM</option>
+                                                <option class="bg-dark">04:00 PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="w-full bg-primary text-white py-4 md:py-6 rounded-2xl font-bold text-base md:text-lg hover:bg-white hover:text-dark transition-all duration-500 shadow-2xl shadow-primary/20 mt-2">Confirm Appointment</button>
+                                    <div id="form-response" class="text-center mt-4"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="py-24 border-t border-gray-100 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="grid md:grid-cols-4 gap-16 mb-20">
+                        <div class="col-span-2">
+                            <a href="#" class="font-heading text-3xl font-extrabold tracking-tighter mb-8 block">THE DENTAL <span class="text-primary">EXPERIENCE</span></a>
+                            <p class="text-gray-400 text-lg max-w-sm">Setting the standard for luxury dental care in New Delhi. Where technology meets empathy.</p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold mb-6">Explore</h5>
+                            <ul class="space-y-4 text-gray-500 font-medium">
+                                <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
+                                <li><a href="#services" class="hover:text-primary transition-colors">Treatments</a></li>
+                                <li><a href="#about" class="hover:text-primary transition-colors">Our Clinic</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="font-bold mb-6">Connect</h5>
+                            <div class="flex gap-4">
+                                <a href="#" class="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center hover:bg-primary/10 transition-colors">
+                                    <img src="https://img.icons8.com/ios-filled/50/0F172A/instagram-new.png" class="w-5" alt="IG">
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center hover:bg-primary/10 transition-colors">
+                                    <img src="https://img.icons8.com/ios-filled/50/0F172A/facebook-new.png" class="w-5" alt="FB">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-10 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <p class="text-gray-400 font-medium italic">© <span id="year"></span> The Dental Experience. All Rights Reserved.</p>
+                        <div class="flex gap-8 text-sm font-bold text-dark uppercase tracking-widest">
+                            <a href="#" class="hover:text-primary transition-colors">Privacy</a>
+                            <a href="#" class="hover:text-primary transition-colors">Terms</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="main.js" defer></script>
+</body>
+</html>
